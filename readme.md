@@ -4,6 +4,5 @@
 
 #### To start application run the script below👇️
 
-`npm start`
-
+`npm start`.
 [[ Thank you ]]
