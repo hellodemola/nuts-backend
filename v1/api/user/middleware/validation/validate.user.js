@@ -23,4 +23,23 @@ const validateAddUser = (req, res, next) => {
   next();
   ;
 }
-module.exports = validateAddUser;
+
+const validateGetUser = (req, res, next) => {
+  const schema = Joi.object({
+    email: Joi.string()
+      .trim()
+      .lowercase({ convert: true })
+      .email()
+      .required()
+  })
+
+
+  const { error } = schema.validate(req.query);
+  if (error) {
+    return res.status(400).send({ message: error.details[0].message });
+  }
+  next();
+  ;
+}
+
+module.exports = {validateAddUser, validateGetUser };
