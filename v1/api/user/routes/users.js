@@ -1,5 +1,6 @@
 var express = require('express');
 const { UserController, addUserController, UserByEmail }= require('../controllers/user.controller');
+const validateAddUser = require('../middleware/validation/validate.user');
 var router = express.Router();
 
 
@@ -10,7 +11,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/all', UserController)
 
-router.post('/add', addUserController)
+router.post('/add', validateAddUser, addUserController)
 router.get('/get', UserByEmail)
 
 module.exports = router;
