@@ -16,8 +16,17 @@ const validateNewOrder = (req, res, next) => {
     quantity: Joi.number()
       .min(1)
       .required(),
+    deliveryDate: Joi.date()
   })
+    const { error } = schema.validate(req.body);
+  if (error) {
+    return res.status(400).send({ message: error.details[0].message });
+  }
+  next();
+  ;
 }
+
+
 
 
 module.exports = { validateNewOrder }

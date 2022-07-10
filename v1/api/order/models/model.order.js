@@ -43,9 +43,10 @@ const getAllOrders = async () => {
 const getOrderByDate = async (date, email) => {
   try {
     const getOrder = await Order.find({
-      "email": email,
-      "date.deliveryDate": date
+      "email": email
     })
+    if (!getOrder) return false
+    return getOrder;
   } catch (error) {
     throw new Error (error)
   }
