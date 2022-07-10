@@ -1,8 +1,10 @@
+const { getAllOrder, isOrderExist, updateOrderServices } = require("../services/service.order")
 
 
 const OrderController = async (req, res) => {
   try {
-    // get all order
+    const getAll = await getAllOrder()
+    return getAll
   } catch (error) {
     res.status(400).send({error})
   }
@@ -10,9 +12,10 @@ const OrderController = async (req, res) => {
 
 const OrderByParticulars = async (req, res) => {
   const { email, date } = req.query
-  // get order by email and deliveryDate
+
   try {
-    
+    const isOrder = await isOrderExist(email, date);
+    return isOrder
   } catch (error) {
     res.status(400).send({error})
   }
@@ -30,14 +33,17 @@ const AddNewOrder = async (req, res) => {
 
 const CheckOrder = async (req, res, next) => {
   try {
-    
+    // check if email already exist
   } catch (error) {
     res.status(400).send({error})
   }
 }
 
 const UpdateOrder = async (req, res) => {
+  const { email, date, quantity } = req.body
   try {
+    const update = await updateOrderServices(email, date, quantity)
+    return update
     
   } catch (error) {
     res.status(400).send({error})
