@@ -12,7 +12,8 @@ const isOrderExist = async (email, date) => {
 
 const addNewOrderServices = async (name, email, quantity, amount, deliveryDate, orderDate) => {
   try {
-    const checkActiveStatus = await isOrderExist(email)
+    const checkActiveStatus = await isOrderExist(email, deliveryDate)
+    console.log(checkActiveStatus, 'starus')
     if (checkActiveStatus.length > 0) return false
     const add = await addNewOrder(name, email, quantity, amount, deliveryDate, orderDate)
     return add
