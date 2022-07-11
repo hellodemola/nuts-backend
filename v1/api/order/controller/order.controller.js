@@ -1,4 +1,5 @@
 const { getAllOrder, isOrderExist, updateOrderServices, addNewOrderServices } = require("../services/service.order")
+const { generateDeliveryDate } = require("../../../../utils/helpers.js")
 
 
 const OrderController = async (req, res) => {
@@ -22,15 +23,16 @@ const OrderByParticulars = async (req, res) => {
 }
 
 const AddNewOrder = async (req, res) => {
-  const { name, email, quantity, amount = 1000, deliveryDate, orderDate = deliveryDate } = req.body
-
+    const { name, email, quantity } = req.body
+    const { deliveryDate, orderDate } = generateDeliveryDate();
+    const amount = quantity * 1000
   try {
     const add = await addNewOrderServices(name, email, quantity, amount, deliveryDate, orderDate)
     if (!add) return res.status(409).send({ message: 'user already exist' })
     res.status(201).send({ data: add })
     
   } catch (error) {
-    res.status(400).send({error})
+    res.status(400).send({ error })
   }
 }
 

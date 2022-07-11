@@ -8,10 +8,8 @@ const orderSchema = new Schema({
   email: String,
   quantity: Number,
   amount: Number,
-  date: {
-    deliveryDate: Date,
-    orderDate: Date
-  },
+  deliveryDate: Date,
+  orderDate: Date,
   status: {
     paid: Boolean,
     delivered: Boolean,
