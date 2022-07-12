@@ -20,6 +20,8 @@ const validateAddUser = (req, res, next) => {
   if (error) {
     return res.status(400).send({ message: error.details[0].message });
   }
+ 
+  req.validatedBody = schema.validate(req.body);
   next();
   ;
 }
