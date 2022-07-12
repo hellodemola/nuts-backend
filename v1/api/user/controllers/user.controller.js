@@ -24,7 +24,7 @@ const UserByEmail = async (req, res) => {
 }
 
 const addUserController = async (req, res) => {
-  const { email, name } = req.body
+  const { email, name } = req?.validatedBody?.value
   try {
     const add = await addNewUser(name, email)
     if (!add) return res.status(409).send({ data: 'user aleady exist' })
