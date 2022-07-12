@@ -1,4 +1,5 @@
 const generateDeliveryDate = (date = new Date()) => {
+  console.log('get today', date)
   const weekDay = date.getDay();
   const today = date.getDate();
   const month = date.getMonth();
@@ -32,6 +33,9 @@ const generateDeliveryDate = (date = new Date()) => {
 }
 
 
-const convertDate = (month, delivery, year) => Date(`${year}/${month + 1}/${delivery + 1}`);
+const convertDate = (month, delivery, year) => {
+  // console.log(month, delivery, year, 'month, delivery, year')
+ return new Date(`${year}/${month + 1}/${delivery + 1}`)
+}
 
 module.exports = { generateDeliveryDate };
