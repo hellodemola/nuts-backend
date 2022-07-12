@@ -15,8 +15,7 @@ const validateNewOrder = (req, res, next) => {
       .required(),
     quantity: Joi.number()
       .min(1)
-      .required(),
-    deliveryDate: Joi.date()
+      .required()
   })
     const { error } = schema.validate(req.body);
   if (error) {

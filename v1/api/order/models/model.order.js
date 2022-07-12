@@ -16,14 +16,19 @@ const addNewOrder = async (name, email, quantity, amount, deliveryDate, orderDat
   }
 }
 
-const updateOrder = async (email, quantity) => {
+const updateOrder = async (email, amount, quantity, date) => {
   try {
-    const findandUpdateOrder = await Order.findOneAndUpdate({
-      "email": email
+   await Order.findOneAndUpdate({
+     "email": email,
+     "deliveryDate": date 
     },
-      quantity
-    )
-    return findandUpdateOrder;
+      {
+        "quantity": quantity,
+        "amount": amount
+      }
+   )
+    const getOrder = await getOrderByDate(date, email);
+    return getOrder;
   } catch (error) {
     throw new Error (error)
   }

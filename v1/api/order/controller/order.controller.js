@@ -12,14 +12,22 @@ const OrderController = async (req, res) => {
 }
 
 const OrderByParticulars = async (req, res) => {
-  const { email, date } = req.query
-
+  const { email } = req.query
+  const { deliveryDate } = generateDeliveryDate();
   try {
-    const isOrder = await isOrderExist(email, date);
+    const isOrder = await isOrderExist(email, deliveryDate );
+    console.log('isCOn', isOrder)
+    if (isOrder.length < 1) return res.send({ message: 'No active sales for this user' })
     res.send({ data: isOrder })
   } catch (error) {
+    console.log(error)
     res.status(400).send({error})
   }
+}
+
+const GetDeliveryDate = async (req, res) => {
+  const { deliveryDate } = generateDeliveryDate();
+  res.send({ data: { deliveryDate } })
 }
 
 const AddNewOrder = async (req, res) => {
@@ -45,14 +53,15 @@ const CheckOrder = async (req, res, next) => {
 }
 
 const UpdateOrder = async (req, res) => {
-  const { email, date, quantity } = req.body
+  const { email, quantity } = req.body;
+  const { deliveryDate } = generateDeliveryDate();
   try {
-    const update = await updateOrderServices(email, date, quantity)
-    return update
+    const update = await updateOrderServices(email, deliveryDate, quantity)
+   res.send({ message: 'User updated successfully', update })
     
   } catch (error) {
     res.status(400).send({error})
   }
 }
 
-module.exports = { OrderController, OrderByParticulars, AddNewOrder, CheckOrder, UpdateOrder }
+module.exports = { OrderController, OrderByParticulars, AddNewOrder, CheckOrder, UpdateOrder, GetDeliveryDate }

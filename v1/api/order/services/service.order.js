@@ -3,6 +3,7 @@ const { getOrderByDate, getAllOrders, updateOrder, addNewOrder } = require("../m
 const isOrderExist = async (email, date) => {
   try {
     const getOrder = await getOrderByDate(date, email)
+    console.log(getOrder, 'getOrder')
     if (!getOrder) return false
     return getOrder;
   } catch (error) {
@@ -34,8 +35,9 @@ const getAllOrder = async () => {
 const updateOrderServices = async (email, date, quantity) => {
   try {
     const isActiveStatus = await isOrderExist(email, date)
+    const amount = quantity * 1000;
     if ( !isActiveStatus ) return false
-    const update = await updateOrder(email, quantity)
+    const update = await updateOrder(email, amount, quantity, date)
     return update
   } catch (error) {
     throw new Error (error)
