@@ -4,7 +4,7 @@
 
 const { formatDate } = require('../utils/time.helpers')
 
-const SendOrderEMail = async (customerEmail, customerName, quantity, deliveryDate) => {
+const SendOrderEMail = async (customerEmail, customerName, quantity, deliveryDate, update) => {
   const { SENDGRID_API_KEY, SENDER_EMAIL } = process.env
   const date = formatDate(deliveryDate)
   const sgMail = require('@sendgrid/mail')
@@ -15,7 +15,7 @@ const SendOrderEMail = async (customerEmail, customerName, quantity, deliveryDat
     cc: SENDER_EMAIL,
     replyTo: SENDER_EMAIL,
     subject: `Dear ${customerName}, we got your order`,
-    html: `Hello ${customerName} <br/><strong>Your ${quantity} quantity of our nuts</strong> has been booked for ${date}. <br /> Thanks`,
+    html: `Hello ${customerName} <br/><strong>Your ${update ? 'updated '+ quantity : quantity} quantity of our nuts</strong> has been booked for ${date}. <br /> Thanks`,
   }
   sgMail
     .send(msg)
