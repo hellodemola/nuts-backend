@@ -11,8 +11,9 @@ const SendOrderEMail = async (customerEmail, customerName, quantity, deliveryDat
   sgMail.setApiKey(SENDGRID_API_KEY)
   const msg = {
     to: customerEmail,
-    from: SENDER_EMAIL,
-    fromName: "NutsAvaliable",
+    from: `NutsAvaliable <${SENDER_EMAIL}>`,
+    cc: SENDER_EMAIL,
+    replyTo: SENDER_EMAIL,
     subject: `Dear ${customerName}, we got your order`,
     html: `Hello ${customerName} <br/><strong>Your ${quantity} quantity of our nuts</strong> has been booked for ${date}. <br /> Thanks`,
   }
