@@ -40,6 +40,7 @@ const updateOrderServices = async (email, date, quantity) => {
     const amount = quantity * 1000;
     if ( !isActiveStatus ) return false
     const update = await updateOrder(email, amount, quantity, date)
+    await SendOrderEMail(email, update[0]?.name, quantity, date, update)
     return update
   } catch (error) {
     throw new Error (error)
