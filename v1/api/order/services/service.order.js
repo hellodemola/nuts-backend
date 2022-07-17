@@ -1,3 +1,4 @@
+const { SendOrderEMail } = require("../../common/emails/order.email")
 const { getOrderByDate, getAllOrders, updateOrder, addNewOrder } = require("../models/model.order")
 
 const isOrderExist = async (email, date) => {
@@ -17,6 +18,7 @@ const addNewOrderServices = async (name, email, quantity, amount, deliveryDate, 
     console.log(checkActiveStatus, 'starus')
     if (checkActiveStatus.length > 0) return false
     const add = await addNewOrder(name, email, quantity, amount, deliveryDate, orderDate)
+    await SendOrderEMail(email, name, quantity, deliveryDate)
     return add
   } catch (error) {
     throw new Error (error)
